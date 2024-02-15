@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Timetable for HSE FE</string>
+    <string name="hse_logo">HSE logo image</string>
+    <string name="student_timetable">РАСПИСАНИЕ ДЛЯ СТУДЕНТОВ</string>
+    <string name="teacher_timetable">РАСПИСАНИЕ ДЛЯ ПРЕПОДАВАТЕЛЯ</string>
+    <string name="day_timetable">РАСПИСАНИЕ\n НА ДЕНЬ</string>
+    <string name="week_timetable">РАСПИCАНИЕ\n НА НЕДЕЛЮ</string>
+    <string name="teacher">Преподаватель</string>
+    <string name="building">Корпус</string>
+    <string name="office">Кабинет</string>
+    <string name="subject">Дисциплина</string>
+    <string name="status">Идёт пара / Нет пар</string>
+    <string name="current_time_is">Сейчас:&#160;</string>
+    <string name="time">12:00</string>
+    <string name="teacher_selection">Выберите преподавателя:</string>
+    <string name="group_selection">Выберите группу:</string>
+</resources>
