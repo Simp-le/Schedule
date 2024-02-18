@@ -14,4 +14,12 @@
     <string name="time">12:00</string>
     <string name="teacher_selection">Выберите преподавателя:</string>
     <string name="group_selection">Выберите группу:</string>
+    <string name="settings">НАСТРОЙКИ</string>
+    <string name="save">СОХРАНИТЬ</string>
+    <string name="available_sensors">Доступные датчики:</string>
+    <string name="current_illumination">Текущая освещённость:</string>
+    <string name="enter_your_name">Укажите ваше имя</string>
+    <string name="take_photo">Сделать фото</string>
+    <string name="specity_photo">Укажите фото:</string>
+    <string name="no_light_sensor">Не найдено сенсора освещённости</string>
 </resources>
