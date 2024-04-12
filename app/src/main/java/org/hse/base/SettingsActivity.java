@@ -2,7 +2,6 @@ package org.hse.base;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -60,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity implements SensorEventLi
     private ImageView profileImage;
     private EditText name;
     private TextView sensorLightText;
-    private LinearLayout permissions;
+    private LinearLayout sensors;
     private String imagePath;
 
     // If user declined permission two times
@@ -75,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity implements SensorEventLi
         profileImage = findViewById(R.id.profile_image);
         name = findViewById(R.id.text_name);
         sensorLightText = findViewById(R.id.text_light_value);
-        permissions = findViewById(R.id.permissions_container);
+        sensors = findViewById(R.id.permissions_container);
 
         sharedPreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -102,15 +101,15 @@ public class SettingsActivity extends AppCompatActivity implements SensorEventLi
             String photo = sharedPreferences.getString(APP_PREFERENCES_PROFILE_PHOTO, "");
             loadImage(photo);
         }
-        setPermissions();
+        setSensors();
     }
 
-    private void setPermissions() {
+    private void setSensors() {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
         List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL);
-        permissions.removeAllViews();
+        sensors.removeAllViews();
         for (Sensor sensor: sensorList) {
             TextView textView = new TextView(this);
             textView.setText(sensor.getName());
@@ -119,7 +118,7 @@ public class SettingsActivity extends AppCompatActivity implements SensorEventLi
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
             textView.setLayoutParams(layoutParams);
-            permissions.addView(textView);
+            sensors.addView(textView);
         }
     }
 
@@ -191,19 +190,13 @@ public class SettingsActivity extends AppCompatActivity implements SensorEventLi
                 alertDialogBuilder.setTitle("Permissions Required")
                         .setMessage("You have forcefully denied some of the required permissions " +
                                 "for this action. If you need this functionality, please open settings, go to the permissions section and allow them.")
-                        .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                        Uri.fromParts("package", getPackageName(), null));
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            }
+                        .setPositiveButton("Settings", (dialog, which) -> {
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                    Uri.fromParts("package", getPackageName(), null));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
+                        .setNegativeButton("Cancel", (dialog, which) -> {
                         })
                         .setCancelable(false).create().show();
             }
