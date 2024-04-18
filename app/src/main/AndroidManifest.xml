@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.camera" android:required="true"/>
 
     <application
@@ -16,16 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-        </activity>
         
         <activity
             android:name=".HomeActivity"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,14 +30,17 @@
 
         <activity android:name=".StudentActivity"
             android:parentActivityName=".HomeActivity">
-
         </activity>
+
         <activity android:name=".TeacherActivity"
             android:parentActivityName=".HomeActivity">
-
         </activity>
+
         <activity android:name=".SettingsActivity"
             android:parentActivityName=".HomeActivity">
+        </activity>
+
+        <activity android:name=".ScheduleActivity">
         </activity>
     </application>
 

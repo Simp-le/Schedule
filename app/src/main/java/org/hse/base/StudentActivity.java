@@ -7,13 +7,14 @@ public class StudentActivity extends PersonActivity {
 
     private static final String TAG = "StudentActivity";
 
-    public StudentActivity() {
-        super(TAG);
-    }
-
     @Override
     int getLayoutResourceId() {
         return R.layout.activity_student;
+    }
+
+    @Override
+    ScheduleMode getScheduleMode() {
+        return ScheduleMode.STUDENT;
     }
 
     @Override
