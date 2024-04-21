@@ -9,7 +9,7 @@
     <string name="building">Корпус</string>
     <string name="office">Кабинет</string>
     <string name="subject">Дисциплина</string>
-    <string name="status">Идёт пара / Нет пар</string>
+    <string name="status">Нет пары</string>
     <string name="current_time_is">Сейчас:&#160;</string>
     <string name="time">12:00</string>
     <string name="teacher_selection">Выберите преподавателя:</string>
@@ -27,4 +27,5 @@
     <string name="place">Ауд. 432, Бульвар Гагарина, 37</string>
     <string name="teacher_name">О.В.Валяхина</string>
     <string name="title">Расписание</string>
+    <string name="no_classes">Нет пар</string>
 </resources>

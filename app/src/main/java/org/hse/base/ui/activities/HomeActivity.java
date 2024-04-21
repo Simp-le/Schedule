@@ -1,10 +1,12 @@
-package org.hse.base;
+package org.hse.base.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.hse.base.R;
 
 public class HomeActivity extends AppCompatActivity {
 

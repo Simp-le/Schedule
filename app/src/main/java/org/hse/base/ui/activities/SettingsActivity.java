@@ -1,4 +1,4 @@
-package org.hse.base;
+package org.hse.base.ui.activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -27,6 +27,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import org.hse.base.R;
 
 import java.io.File;
 import java.io.FileOutputStream;

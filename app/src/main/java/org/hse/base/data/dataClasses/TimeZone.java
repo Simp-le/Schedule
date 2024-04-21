@@ -1,4 +1,4 @@
-package org.hse.base.schedule;
+package org.hse.base.data.dataClasses;
 
 import com.google.gson.annotations.SerializedName;
 

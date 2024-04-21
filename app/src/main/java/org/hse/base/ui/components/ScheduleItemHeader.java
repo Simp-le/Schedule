@@ -1,4 +1,4 @@
-package org.hse.base.schedule;
+package org.hse.base.ui.components;
 
 public class ScheduleItemHeader extends ScheduleItem{
     private String title;
