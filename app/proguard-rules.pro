@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+
+-keepattributes SourceFile, LineNumberTable
+
+#-keep class org.hse.base.data.dataClasses.TimeResponse
+#-keep class org.hse.base.data.dataClasses.TimeZone
+
+# ProGuard doesn't print notes about class with matching name
+-dontnote com.google.gson.annotations.SerializedName
+-keepclasseswithmembers,allowobfuscation class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}

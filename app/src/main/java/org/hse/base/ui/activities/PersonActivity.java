@@ -44,29 +44,6 @@ public abstract class PersonActivity extends AppCompatActivity {
     abstract int getLayoutResourceId();
 
 
-
-    private void initData() {
-        initDataFromTimetable(null);
-    }
-
-    protected void initDataFromTimetable(TimetableWithTeacherEntity timetableWithTeacherEntity) {
-        if (timetableWithTeacherEntity == null) {
-            status.setText(R.string.status);
-            subjectLayout.setVisibility(View.GONE);
-            return;
-        }
-
-
-        subjectLayout.setVisibility(View.VISIBLE);
-        TimetableEntity timetableEntity = timetableWithTeacherEntity.timetableEntity;
-        status.setText("Идёт пара");
-        subject.setText(timetableEntity.subjName);
-        office.setText(String.format("Кабинет %s", timetableEntity.cabinet));
-        building.setText(timetableEntity.corp);
-        teacher.setText(timetableWithTeacherEntity.teacherEntity.fio);
-    }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +53,8 @@ public abstract class PersonActivity extends AppCompatActivity {
         ScheduleMode scheduleMode = getScheduleMode();
 
         spinner = findViewById(R.id.groupList);
+        // TODO: watch this out... in showTime
+        // currentTime = Calendar.getInstance().getTime();
         buttonScheduleDay = findViewById(R.id.button_day);
         buttonScheduleWeek = findViewById(R.id.button_week);
 
@@ -100,23 +79,15 @@ public abstract class PersonActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
 
         time = findViewById(R.id.time);
-        personViewModel.getTime().observe(this, dateTime -> {
-            if (dateTime != null) {
-                showTime(dateTime);
-            }
-        });
-        personViewModel.getErrorMessage().observe(this, errorMessage -> {
-            if (errorMessage != null) {
-                //Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
-                Log.e(TAG, errorMessage);
-            }
-        });
-        personViewModel.fetchTime();
+        initTime();
+
+        //personViewModel.timeRepo.fetchTime();
 
 
         subjectLayout = findViewById(R.id.subject_layout);
@@ -128,6 +99,41 @@ public abstract class PersonActivity extends AppCompatActivity {
         teacher = findViewById(R.id.teacher);
 
         initData();
+    }
+
+
+    private void initTime() {
+        personViewModel.getTime().observe(this, dateTime -> {
+            currentTime = dateTime;
+            showTime(dateTime);
+        });
+
+        personViewModel.getErrorMessage().observe(this, errorMessage -> {
+            if (errorMessage != null) {
+                Log.e(TAG, errorMessage);
+            }
+        });
+    }
+
+    private void initData() {
+        initDataFromTimetable(null);
+    }
+
+    protected void initDataFromTimetable(TimetableWithTeacherEntity timetableWithTeacherEntity) {
+        if (timetableWithTeacherEntity == null) {
+            status.setText(R.string.status);
+            subjectLayout.setVisibility(View.GONE);
+            return;
+        }
+
+
+        subjectLayout.setVisibility(View.VISIBLE);
+        TimetableEntity timetableEntity = timetableWithTeacherEntity.timetableEntity;
+        status.setText(R.string.class_going);
+        subject.setText(timetableEntity.subjName);
+        office.setText(String.format("Кабинет %s", timetableEntity.cabinet));
+        building.setText(timetableEntity.corp);
+        teacher.setText(timetableWithTeacherEntity.teacherEntity.fio);
     }
 
     protected Group getSelectedGroup() {
@@ -145,7 +151,6 @@ public abstract class PersonActivity extends AppCompatActivity {
     }
 
 
-
     protected void showSchedule(ScheduleType type, ScheduleMode mode) {
         Object selectedItem = spinner.getSelectedItem();
         if (!(selectedItem instanceof Group)) {
@@ -159,15 +164,16 @@ public abstract class PersonActivity extends AppCompatActivity {
             return;
         }
 
-        currentTime = dateTime;
+        // currentTime = dateTime;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm, EEEE", Locale.forLanguageTag("ru"));
-        time.setText(simpleDateFormat.format(currentTime));
+        time.setText(simpleDateFormat.format(dateTime));
     }
 
     static class Group {
 
         private Integer id;
         private String name;
+
         public Group(Integer id, String name) {
             this.id = id;
             this.name = name;
@@ -196,7 +202,6 @@ public abstract class PersonActivity extends AppCompatActivity {
         }
 
     }
-
 
 
     enum ScheduleType {

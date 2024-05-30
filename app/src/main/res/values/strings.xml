@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Timetable for HSE FE</string>
+    <string name="app_name">Timetable for HSE PE</string>
     <string name="hse_logo">HSE logo image</string>
     <string name="student_timetable">РАСПИСАНИЕ ДЛЯ СТУДЕНТОВ</string>
     <string name="teacher_timetable">РАСПИСАНИЕ ДЛЯ ПРЕПОДАВАТЕЛЯ</string>
@@ -11,7 +11,7 @@
     <string name="subject">Дисциплина</string>
     <string name="status">Нет пары</string>
     <string name="current_time_is">Сейчас:&#160;</string>
-    <string name="time">12:00</string>
+    <string name="time">Время</string>
     <string name="teacher_selection">Выберите преподавателя:</string>
     <string name="group_selection">Выберите группу:</string>
     <string name="settings">НАСТРОЙКИ</string>
@@ -28,4 +28,5 @@
     <string name="teacher_name">О.В.Валяхина</string>
     <string name="title">Расписание</string>
     <string name="no_classes">Нет пар</string>
+    <string name="class_going">Идёт пара</string>
 </resources>

@@ -70,7 +70,11 @@ public class ScheduleActivity extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", new Locale("ru"));
         TextView title = findViewById(R.id.title);
-        title.setText(String.format("%s %s %s %s", groupName, type, mode, sdf.format(currentTime)));
+
+        if (currentTime != null)
+            title.setText(String.format("%s %s %s %s", groupName, type, mode, sdf.format(currentTime)));
+        else
+            title.setText(String.format("%s %s %s %s", groupName, type, mode, getResources().getString(R.string.time)));
 
         recyclerView = findViewById(R.id.listView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -82,40 +86,49 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     private void filterItem(ScheduleType type, ScheduleMode mode) {
-        Calendar dayStart = Calendar.getInstance();
-        dayStart.setTime(currentTime);
-        Calendar dayEnd = (Calendar) dayStart.clone();
-
-        dayStart = resetTime(dayStart, 0, 0, 0);
-        dayEnd = resetTime(dayEnd, 23, 59, 59);
-
-        Calendar weekStart = Calendar.getInstance();
-        weekStart.setTime(currentTime);
-        int daysUntilSunday = Calendar.SUNDAY - weekStart.get(Calendar.DAY_OF_WEEK);
-        if (daysUntilSunday < 0)
-        {
-            daysUntilSunday += 7;
+        if (currentTime == null) {
+            showNoSchedule();
+            return;
         }
-        Calendar weekEnd = (Calendar) weekStart.clone();
-        weekEnd.add(Calendar.DAY_OF_YEAR, daysUntilSunday);
 
-        weekStart = resetTime(weekStart, 0, 0, 0);
-        weekEnd = resetTime(weekEnd, 23, 59, 59);
+        Calendar calendarDayStart = Calendar.getInstance();
+        calendarDayStart.setTime(currentTime);
+        Calendar calendarDayEnd = (Calendar) calendarDayStart.clone();
+
+        calendarDayStart = resetTime(calendarDayStart, 0, 0, 0);
+        calendarDayEnd = resetTime(calendarDayEnd, 23, 59, 59);
+
+        Calendar calendarWeekStart = Calendar.getInstance(Locale.forLanguageTag("ru"));
+        calendarWeekStart.setTime(currentTime);
+        int daysUntilSunday = Calendar.SUNDAY - calendarWeekStart.get(Calendar.DAY_OF_WEEK);
+
+        Calendar calendarWeekEnd = (Calendar) calendarWeekStart.clone();
+        calendarWeekEnd.add(Calendar.DAY_OF_YEAR, daysUntilSunday);
+
+        calendarWeekStart = resetTime(calendarWeekStart, 0, 0, 0);
+        calendarWeekEnd = resetTime(calendarWeekEnd, 23, 59, 59);
+
+        Date dayStart, dayEnd, weekStart, weekEnd;
+
+        dayStart = calendarDayStart.getTime();
+        dayEnd = calendarDayEnd.getTime();
+        weekStart = calendarWeekStart.getTime();
+        weekEnd = calendarWeekEnd.getTime();
 
         if (mode == ScheduleMode.STUDENT && type == ScheduleType.DAY) {
-            personViewModel.getStudentsTimetableByDate(dayStart.getTime(), dayEnd.getTime(), groupId)
+            personViewModel.getStudentsTimetableByDate(dayStart, dayEnd, groupId)
                     .observe(this, this::initData);
         }
         else if (mode == ScheduleMode.STUDENT && type == ScheduleType.WEEK) {
-            personViewModel.getStudentsTimetableByDate(weekStart.getTime(), weekEnd.getTime(), groupId)
+            personViewModel.getStudentsTimetableByDate(weekStart, weekEnd, groupId)
                     .observe(this, this::initData);
         }
         else if (mode == ScheduleMode.TEACHER && type == ScheduleType.DAY) {
-            personViewModel.getTeacherTimetableByDate(dayStart.getTime(), dayEnd.getTime(), groupId)
+            personViewModel.getTeacherTimetableByDate(dayStart, dayEnd, groupId)
                     .observe(this, this::initData);
         }
         else if (mode == ScheduleMode.TEACHER && type == ScheduleType.WEEK) {
-            personViewModel.getTeacherTimetableByDate(weekStart.getTime(), weekEnd.getTime(), groupId)
+            personViewModel.getTeacherTimetableByDate(weekStart, weekEnd, groupId)
                     .observe(this, this::initData);
         }
     }
@@ -131,11 +144,9 @@ public class ScheduleActivity extends AppCompatActivity {
     private void initData(List<TimetableWithTeacherEntity> scheduleItems) {
 
         if (scheduleItems.isEmpty()) {
-            recyclerView.setVisibility(View.GONE);
-            noScheduleText.setVisibility(View.VISIBLE);
+            showNoSchedule();
             return;
         }
-
 
         SimpleDateFormat sdfHeader = new SimpleDateFormat("EEEE, dd MMMM", new Locale("ru"));
         SimpleDateFormat sdfItem = new SimpleDateFormat("HH:mm", new Locale("ru"));
@@ -172,10 +183,14 @@ public class ScheduleActivity extends AppCompatActivity {
         adapter.setDataList(newScheduleItems);
     }
 
+    private void showNoSchedule() {
+        recyclerView.setVisibility(View.GONE);
+        noScheduleText.setVisibility(View.VISIBLE);
+    }
+
     private void onScheduleItemClick(ScheduleItem scheduleItem) {
         Log.d(TAG, "Schedule Item Click");
     }
-
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

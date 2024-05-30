@@ -31,7 +31,7 @@ public class DbRepo {
 
 
     public LiveData<List<TimetableWithTeacherEntity>> getTimetablesWithTeacherByDateAndGroupId(Date date, int groupId) {
-        return dao.getTimetablesWithTeacherByDateAndGroupId(Converters.dateToTimestamp(date), groupId);
+        return dao.getTimetablesWithTeacherByDateAndGroupId(date, groupId);
     }
     public LiveData<List<TimetableWithTeacherEntity>> getTimetablesWithTeacherByDateAndTeacherId(Date date, int teacherId) {
         return dao.getTimetablesWithTeacherByDateAndTeacherId(Converters.dateToTimestamp(date), teacherId);

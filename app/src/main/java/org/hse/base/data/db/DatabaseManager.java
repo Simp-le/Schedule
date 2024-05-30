@@ -231,39 +231,8 @@ public class DatabaseManager {
         timetables.add(timetable);
         //endregion
 
-        // DatabaseManager.getInstance(context).getDao().insertTimetables(timetables);
-        //endregion
-
-
-
-        timetable = new TimetableEntity();
-        timetable.id = 11;
-        timetable.cabinet = "511";
-        timetable.subGroup = "ПИ";
-        timetable.subjName = "Разработка и анализ требований";
-        timetable.corp = "3 корпус";
-        timetable.type = 0;
-        timetable.timeStart = dateFromString("2024-04-21 3:00");
-        timetable.timeEnd = dateFromString("2024-04-21 21:00");
-        timetable.groupId = 1;
-        timetable.teacherId = 3;
-        timetables.add(timetable);
-
-        timetable = new TimetableEntity();
-        timetable.id = 12;
-        timetable.cabinet = "511";
-        timetable.subGroup = "ПИ";
-        timetable.subjName = "Разработка и анализ требований";
-        timetable.corp = "3 корпус";
-        timetable.type = 0;
-        timetable.timeStart = dateFromString("2024-04-21 3:00");
-        timetable.timeEnd = dateFromString("2024-04-21 23:50");
-        timetable.groupId = 2;
-        timetable.teacherId = 3;
-        timetables.add(timetable);
-
         DatabaseManager.getInstance(context).getDao().insertTimetables(timetables);
-
+        //endregion
     }
 
     private Date dateFromString(String date) {

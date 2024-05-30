@@ -12,6 +12,7 @@ import org.hse.base.data.db.entities.TeacherEntity;
 import org.hse.base.data.db.entities.TimetableEntity;
 import org.hse.base.data.db.entities.TimetableWithTeacherEntity;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -58,7 +59,7 @@ public interface ScheduleDao {
 
     @Transaction
     @Query("SELECT * FROM `time_table` WHERE time_start <= :date and time_end >= :date and group_id == :groupId group by subj_name, time_start order by time_start")
-    LiveData<List<TimetableWithTeacherEntity>> getTimetablesWithTeacherByDateAndGroupId(Long date, int groupId);
+    LiveData<List<TimetableWithTeacherEntity>> getTimetablesWithTeacherByDateAndGroupId(Date date, int groupId);
     @Transaction
     @Query("SELECT * FROM `time_table` WHERE time_start <= :date and time_end >= :date and teacher_id == :teacherId group by subj_name, time_start order by time_start")
     LiveData<List<TimetableWithTeacherEntity>> getTimetablesWithTeacherByDateAndTeacherId(Long date, int teacherId);

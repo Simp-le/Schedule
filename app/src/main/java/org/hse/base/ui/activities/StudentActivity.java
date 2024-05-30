@@ -36,9 +36,9 @@ public class StudentActivity extends PersonActivity {
 
     @Override
     protected void showTime(Date dateTime) {
-        if (dateTime == null) {
-            return;
-        }
+//        if (dateTime == null) {
+//            return;
+//        }
         super.showTime(dateTime);
 
         personViewModel.getTimetablesWithTeacherByDateAndGroupId(dateTime, getSelectedGroup().getId()).observe(this, timetableWithTeacherEntities -> {
