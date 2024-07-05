@@ -1,7 +1,8 @@
+# Description
 This application was created during the Android development course at the HSE University.
 It is intentionally not fully functional. The HSE API is not used to get the schedule from the backend.
 
-Screenshots:
+# Screenshots
 Main page:
 
 ![image](https://github.com/Simp-le/schedule/assets/40547696/d624bf34-0fcc-4dc8-954d-b037fc681e9b)
