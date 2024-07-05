@@ -93,20 +93,15 @@ public class ScheduleActivity extends AppCompatActivity {
 
         Calendar calendarDayStart = Calendar.getInstance();
         calendarDayStart.setTime(currentTime);
-        Calendar calendarDayEnd = (Calendar) calendarDayStart.clone();
-
         calendarDayStart = resetTime(calendarDayStart, 0, 0, 0);
+        Calendar calendarDayEnd = (Calendar) calendarDayStart.clone();
         calendarDayEnd = resetTime(calendarDayEnd, 23, 59, 59);
 
-        Calendar calendarWeekStart = Calendar.getInstance(Locale.forLanguageTag("ru"));
-        calendarWeekStart.setTime(currentTime);
-        int daysUntilSunday = Calendar.SUNDAY - calendarWeekStart.get(Calendar.DAY_OF_WEEK);
+        Calendar calendarWeekStart = (Calendar) calendarDayStart.clone();
+        Calendar calendarWeekEnd = (Calendar) calendarDayEnd.clone();
 
-        Calendar calendarWeekEnd = (Calendar) calendarWeekStart.clone();
+        int daysUntilSunday = ((7 + (1 - calendarWeekStart.get(Calendar.DAY_OF_WEEK)))%7);
         calendarWeekEnd.add(Calendar.DAY_OF_YEAR, daysUntilSunday);
-
-        calendarWeekStart = resetTime(calendarWeekStart, 0, 0, 0);
-        calendarWeekEnd = resetTime(calendarWeekEnd, 23, 59, 59);
 
         Date dayStart, dayEnd, weekStart, weekEnd;
 
